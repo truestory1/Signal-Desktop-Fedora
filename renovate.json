@@ -3,6 +3,7 @@
   "forkProcessing": "enabled",
   "extends": [
     "config:recommended",
-    "customManagers:dockerfileVersions"
+    "customManagers:dockerfileVersions",
+    "helpers:pinGitHubActionDigests"
   ]
 }
