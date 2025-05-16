@@ -6,15 +6,22 @@
     "customManagers:dockerfileVersions",
     "helpers:pinGitHubActionDigests"
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "description": "Update Signal Desktop version from SIGNAL_VERSION file",
-      "fileMatch": ["(^|/)SIGNAL_VERSION$"],
-      "matchStrings": ["^(?<version>v?\\d+\\.\\d+\\.\\d+)$"],
+      "customType": "regex",
+      "fileMatch": ["^SIGNAL_VERSION$"],
+      "matchStrings": [
+        "^(?<currentValue>v?[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9\\.]+)?)$"
+      ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "signalapp/Signal-Desktop",
-      "versioningTemplate": "semver",
-      "extractVersionTemplate": "{{{version}}}",
-      "replaceStringTemplate": "{{{newVersion}}}"
+      "versioningTemplate": "semver"
     }
-  ]}
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["signalapp/Signal-Desktop"],
+      "allowedVersions": "/.*/"
+    }
+  ]
+}
