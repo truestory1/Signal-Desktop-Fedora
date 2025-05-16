@@ -6,16 +6,19 @@
     "customManagers:dockerfileVersions",
     "helpers:pinGitHubActionDigests"
   ],
-
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^SIGNAL_VERSION$"],
-      "matchStrings": ["^(?<currentValue>v?[0-9]+\\.[0-9]+\\.[0-9]+)$"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^SIGNAL_VERSION$/"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>v?[0-9]+\\.[0-9]+\\.[0-9]+)$"
+      ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "signalapp/Signal-Desktop",
       "versioningTemplate": "semver",
       "extractVersionTemplate": "{{currentValue}}"
     }
   ]
-
 }
