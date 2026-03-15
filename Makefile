@@ -18,8 +18,8 @@ build: requirements clean
 	@echo "ARCH: $(ARCH)"
 	@echo "PATCH_FILE: $(PATCH_FILE)"
 	@mkdir -p output
-	@podman build --build-arg=ARCH=$(ARCH) --build-arg=FEDORA_VERSION=$(FEDORA_VERSION) --build-arg=PATCH_FILE=./patch/$(PATCH_FILE) --build-arg NODE_VERSION=$(NODE_VERSION) --build-arg SIGNAL_VERSION=$$(echo "$(SIGNAL_VERSION)" | tr -d vV) -t signal-desktop-rpm:latest .
-	@podman run -it --rm -v $$PWD/output:/output:Z signal-desktop-rpm:latest
+	@podman build --build-arg=ARCH=$(ARCH) --build-arg=FEDORA_VERSION=$(FEDORA_VERSION) --build-arg=PATCH_FILE=./patch/$(PATCH_FILE) --build-arg NODE_VERSION=$(NODE_VERSION) -t signal-desktop-rpm:latest .
+	@podman run -it --rm -e SIGNAL_VERSION=$$(echo "$(SIGNAL_VERSION)" | tr -d vV) -v $$PWD/output:/output:Z signal-desktop-rpm:latest
 
 standalone:
 	@make --no-print-directory PATCH_FILE=Signal-Desktop-standalone.patch
