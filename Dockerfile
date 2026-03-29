@@ -10,6 +10,7 @@ RUN dnf update -y \
 
 # Install nvm
 ARG NODE_VERSION
+# renovate: datasource=github-releases depName=nvm-sh/nvm
 ENV NVM_VERSION=0.40.0
 ENV NVM_DIR=/usr/local/nvm
 RUN mkdir $NVM_DIR
@@ -22,6 +23,7 @@ ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install pnpm
+# renovate: datasource=npm depName=pnpm
 RUN npm install -g pnpm@10.18.1
 
 # Add patch file
