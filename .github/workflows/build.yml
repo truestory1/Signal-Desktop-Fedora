@@ -21,7 +21,7 @@ jobs:
   dockerfile:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - run: |
           export SIGNAL_VERSION=$(cat Makefile | grep SIGNAL_VERSION | head -n 1 | cut -d= -f2 | tr -d vV)
           echo "SIGNAL_VERSION=$SIGNAL_VERSION" >> $GITHUB_ENV
@@ -59,7 +59,7 @@ jobs:
     if: needs.dockerfile.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - run: echo "SIGNAL_VERSION=$(cat Makefile | grep SIGNAL_VERSION | head -n 1 | cut -d= -f2 | tr -d vV)" >> $GITHUB_ENV
       - uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6
         id: meta
