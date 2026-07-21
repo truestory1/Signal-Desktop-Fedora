@@ -20,14 +20,14 @@ jobs:
   dockerfile:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - run: |
           export SIGNAL_VERSION=$(cat Makefile | grep SIGNAL_VERSION | head -n 1 | cut -d= -f2 | tr -d vV)
           echo "SIGNAL_VERSION=$SIGNAL_VERSION" >> $GITHUB_ENV
           echo "FEDORA_VERSION=$(cat Makefile | grep FEDORA_VERSION | head -n 1 | cut -d= -f2)" >> $GITHUB_ENV
           echo "NODE_VERSION=$(curl -s https://raw.githubusercontent.com/signalapp/Signal-Desktop/refs/tags/v$SIGNAL_VERSION/.nvmrc)" >> $GITHUB_ENV
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -37,7 +37,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=raw,value=latest
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         id: build-and-push
         with:
           file: Dockerfile
@@ -58,7 +58,7 @@ jobs:
     if: needs.dockerfile.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - run: echo "SIGNAL_VERSION=$(cat Makefile | grep SIGNAL_VERSION | head -n 1 | cut -d= -f2 | tr -d vV)" >> $GITHUB_ENV
       - uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6
         id: meta
@@ -70,7 +70,7 @@ jobs:
           docker run --rm -e SIGNAL_VERSION=${{ env.SIGNAL_VERSION }} -v ./output:/output:Z ${{ steps.meta.outputs.tags }}
           mv ./output/*.rpm .
       - run: sha256sum *.rpm > subject.checksums.txt
-      - uses: actions/attest@v3
+      - uses: actions/attest@daf44fb950173508f38bd2406030372c1d1162b1 # v3
         with:
           subject-checksums: subject.checksums.txt
           predicate-type: "https://example.com/predicate/v1"
